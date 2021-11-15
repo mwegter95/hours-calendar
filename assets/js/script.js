@@ -1,7 +1,6 @@
 let displayDate = document.querySelector("#currentDay");
 let putTimeBlocksHere = document.querySelector(".container");
-// temporarily changed to show hour change from 8 and timeblock styles update when update time function is called on the interval
-let m = moment().hour(11);
+let m = moment();
 displayDate.textContent = m.format("LL");
 let businessHours = [7,8,9,10,11,12,13,14,15,16,17,18,19];
 let eventSaveArray = ["","","","","","","","","","","",""];
@@ -55,7 +54,7 @@ let makeTimeBlocks = function() {
         } else {
             newTimeBlock.classList.add("future");
         }
-        // the html for the actual blocks for time, event, and saving
+        // the html for the actual blocks for time, event, and save button
         newTimeBlock.innerHTML = `
                 <p class="hour col-2" id="hour-${i}"> ${hour}:00 </p>
                 <textarea class="event-block col-8" id="text-area-${i}"></textarea>
