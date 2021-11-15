@@ -16,8 +16,18 @@ let makeTimeBlocks = function() {
         let newTimeBlock = document.createElement("div");
         newTimeBlock.classList = "time-block col-12 row past";
         newTimeBlock.id = "time-block-" + i;
+        newTimeBlock.setAttribute("hour", i + 7);
+        // check if the time block's hour is in the past or not and add a class for css styling
+        if (newTimeBlock.getAttribute("hour") < hourOfDay) {
+            newTimeBlock.classList.add("past");
+        } else if (newTimeBlock.getAttribute("hour") == hourOfDay) {
+            newTimeBlock.classList.add("present");
+        } else {
+            newTimeBlock.classList.add("future");
+        }
+        // the html for the actual blocks for time, event, and saving
         newTimeBlock.innerHTML = `
-                <p class="hour col-2" id="hour-${i}"> ${hour} </p>
+                <p class="hour col-2" id="hour-${i}"> ${hour}:00 </p>
                 <textarea class="event-block col-8" id="text-area-${i}"></textarea>
                 <button class="saveBtn save-block col-2" id="save-btn-${i}">save</button>`;
         putTimeBlocksHere.appendChild(newTimeBlock);
