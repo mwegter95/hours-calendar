@@ -44,10 +44,6 @@ let saveIsClicked = function(event) {
         let eventBlockId = "";
         let saveClickedId = event.target.id;
         eventBlockId = saveClickedId.slice(9)
-        // if (saveClickedId > 10) {
-        //     eventBlockId = saveClickedId.charAt(saveClickedId.length -2);
-        // }
-        // eventBlockId += saveClickedId.charAt(saveClickedId.length -1);
         console.log(eventBlockId);
         
         // get the textarea at the same id row
@@ -73,7 +69,7 @@ let saveEventsToStorage = function() {
 let loadEventsFromStorage = function() {
     if (window.localStorage["eventsSaved"]) {
         let eventLoadString = (localStorage.getItem("eventsSaved"));
-        // parse into an array of objects
+        // parse string into an array of objects
         eventLoadArray = JSON.parse(eventLoadString);
         // make save and load strings equal to persist values after refresh
         eventSaveArray = eventLoadArray;
@@ -83,8 +79,10 @@ let loadEventsFromStorage = function() {
             if (savedEvent == "") {
                 
             } else {
-                console.log(savedEvent);
+                console.log(savedEvent); // savedEvent is now any object the for loop hits in the array of saved event objects
+                // then it selects the html element matching the timeblock
                 let effectedEvent = document.querySelector(`${savedEvent.id}`);
+                // finally it makes the textarea's value and display equal to the savedEvent object's textWords attribute
                 effectedEvent.value = savedEvent.textWords;
 
             }
