@@ -1,6 +1,7 @@
 let displayDate = document.querySelector("#currentDay");
 let putTimeBlocksHere = document.querySelector(".container");
-let m = moment();
+// temporarily changed to show hour change from 8 and timeblock styles update when update time function is called on the interval
+let m = moment().hour(11);
 displayDate.textContent = m.format("LL");
 let businessHours = [7,8,9,10,11,12,13,14,15,16,17,18,19];
 let eventSaveArray = ["","","","","","","","","","","",""];
@@ -8,13 +9,42 @@ let eventLoadArray = [];
 let hourOfDay = m.hour();
 console.log(hourOfDay);
 
+// handle updating the time so that the color coded event blocks for past, present, future are updated as a user is on the page
+let updateTime = function() {
+    if (hourOfDay !== moment().hour()) {
+        hourOfDay = moment().hour();
+        updateTimeBlocks();
+        return;
+    }
+}
+setInterval(function() {
+    updateTime();
+    console.log(hourOfDay);
+}, 6000)
+
+let updateTimeBlocks = function() {
+    let timeBlocks = document.querySelectorAll(".time-block");
+    for (let i = 0; i < timeBlocks.length; i++) {
+        const timeBlock = timeBlocks[i];
+        console.log(timeBlock.getAttribute("hour"));
+        if (timeBlock.getAttribute("hour") < hourOfDay) {
+            timeBlock.classList = "time-block col-12 row past";
+        } else if (timeBlock.getAttribute("hour") == hourOfDay) {
+            timeBlock.classList = "time-block col-12 row present";
+        } else {
+            timeBlock.classList = "time-block col-12 row future";
+        }
+        console.log(timeBlock.classList);
+
+    }
+}
 
 // build out time blocks on the page for business hours
 let makeTimeBlocks = function() {
     for (let i = 0; i < businessHours.length; i++) {
         let hour = businessHours[i];
         let newTimeBlock = document.createElement("div");
-        newTimeBlock.classList = "time-block col-12 row past";
+        newTimeBlock.classList = "time-block col-12 row";
         newTimeBlock.id = "time-block-" + i;
         newTimeBlock.setAttribute("hour", i + 7);
         // check if the time block's hour is in the past or not and add a class for css styling
